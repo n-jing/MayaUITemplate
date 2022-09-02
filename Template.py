@@ -1,28 +1,20 @@
 # -*- coding: utf-8 -*-
-from maya import cmds
+import maya.cmds as cmds
 import maya.api.OpenMaya as OpenMaya
-from maya import OpenMayaUI as omui
+import maya.OpenMayaUI as omui
 import ssds_ui
-import maya.mel
 from PySide2.QtCore import * 
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 from PySide2.QtUiTools import *
 import shiboken2 as shiboken
-import pymel.core as pm
-
-import os, sys, time, copy
-import string
 
 def maya_useNewAPI(): pass
-
-RELEASE_DATE = '2022.03.21'
-ssdsUiWindow = None
 
 class ssdsUI(QMainWindow):
     ptr = omui.MQtUtil.mainWindow()
     parent = shiboken.wrapInstance(long(ptr), QWidget)
-    titleName = 'SkinDecomp v.' + RELEASE_DATE
+    titleName = 'SkinDecomp v.'
 
     def __init__(self, parent = None):
         super(ssdsUI, self).__init__(self.parent)
@@ -46,13 +38,14 @@ class ssdsUI(QMainWindow):
             cmds.undoInfo(closeChunk = True)
             
 def showUI(arg):
-    global ssdsUiWindow
+    ssdsUiWindow = None
+    # global ssdsUiWindow
     if ssdsUiWindow == None:
         ssdsUiWindow = ssdsUI()
     ssdsUiWindow.show()
 
 def initializePlugin(plugin):
-    fnPlugin = OpenMaya.MFnPlugin(plugin, vendor = 'SkinDecompd', version = 'v.' + RELEASE_DATE)
+    fnPlugin = OpenMaya.MFnPlugin(plugin, 'Template', "1.0")
     try:
         createUI()
     except: raise
