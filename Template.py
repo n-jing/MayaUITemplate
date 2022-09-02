@@ -49,7 +49,9 @@ def showUI(arg):
 def initializePlugin(plugin):
     fnPlugin = OpenMaya.MFnPlugin(plugin, 'TemplateUI', "1.0")
     try:
-        createUI()
+        MainMenuName = "TemplateMenu"
+        MenuItemName = "MenuItem"
+        createUI(MainMenuName, MenuItemName)
     except: raise
  
 def uninitializePlugin(plugin):
@@ -58,14 +60,14 @@ def uninitializePlugin(plugin):
         deleteUI()
     except: raise
 
-def createUI():
+def createUI(MainMenuName, MenuItemName):
     cmds.setParent('MayaWindow')
     try:
         cmds.menu('MainMenu', query = True, label = True)
     except:
-        cmds.menu('MainMenu', label = 'TemplateMain')
+        cmds.menu('MainMenu', label = MainMenuName)
     cmds.setParent('MainMenu', menu = True)
-    cmds.menuItem('TemplateMenu', label = 'TemplateMenu', command = showUI)
+    cmds.menuItem('TemplateMenu', label = MenuItemName, command = showUI)
 
 def deleteUI():
     try:
