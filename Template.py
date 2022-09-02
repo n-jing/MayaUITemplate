@@ -9,12 +9,13 @@ from PySide2.QtWidgets import *
 from PySide2.QtUiTools import *
 import shiboken2 as shiboken
 
+# neccessary api
 def maya_useNewAPI(): pass
 
 class ssdsUI(QMainWindow):
     ptr = omui.MQtUtil.mainWindow()
     parent = shiboken.wrapInstance(long(ptr), QWidget)
-    titleName = 'SkinDecomp v.'
+    titleName = 'Template Title'
 
     def __init__(self, parent = None):
         super(ssdsUI, self).__init__(self.parent)
@@ -59,18 +60,18 @@ def uninitializePlugin(plugin):
 def createUI():
     cmds.setParent('MayaWindow')
     try:
-        cmds.menu('SkinDecomp', query = True, label = True)
+        cmds.menu('MainMenu', query = True, label = True)
     except:
-        cmds.menu('SkinDecomp', label = 'SkinDecomp')
-    cmds.setParent('SkinDecomp', menu = True)
-    cmds.menuItem('SkinDecomp', label = 'SkinDecomp', command = showUI)
+        cmds.menu('MainMenu', label = 'TemplateMain')
+    cmds.setParent('MainMenu', menu = True)
+    cmds.menuItem('TemplateMenu', label = 'TemplateMenu', command = showUI)
 
 def deleteUI():
     try:
-        cmds.deleteUI('SkinDecomp', menuItem = True)
+        cmds.deleteUI('MainMenu', menuItem = True)
     except: pass
     try:
-        itemArray = cmds.menu('SkinDecomp', query = True, itemArray = True)
+        itemArray = cmds.menu('MainMenu', query = True, itemArray = True)
         if itemArray == None:
-            cmds.deleteUI('SkinDecomp')
+            cmds.deleteUI('MainMenu')
     except: pass
