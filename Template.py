@@ -2,7 +2,7 @@
 import maya.cmds as cmds
 import maya.api.OpenMaya as OpenMaya
 import maya.OpenMayaUI as omui
-import ssds_ui
+import UI
 from PySide2.QtCore import * 
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
@@ -12,14 +12,14 @@ import shiboken2 as shiboken
 # neccessary api
 def maya_useNewAPI(): pass
 
-class ssdsUI(QMainWindow):
+class TemplateUI(QMainWindow):
     ptr = omui.MQtUtil.mainWindow()
     parent = shiboken.wrapInstance(long(ptr), QWidget)
     titleName = 'Template Title'
 
     def __init__(self, parent = None):
-        super(ssdsUI, self).__init__(self.parent)
-        self.ui = ssds_ui.Ui_Dialog()
+        super(TemplateUI, self).__init__(self.parent)
+        self.ui = UI.Ui_Dialog()
         self.ui.setupUi(self)
         self.setWindowTitle(self.titleName)
         
@@ -32,21 +32,22 @@ class ssdsUI(QMainWindow):
 
         cmds.undoInfo(openChunk = True)
         try:
-            cands = build(nnz, LaplacianStep, Iterations, LaplacianIterNum, clusterRing)
+            print("***************process****************")
+            build(nnz, LaplacianStep, Iterations, LaplacianIterNum, clusterRing)
         except Exception as e:
             raise e
         finally:
             cmds.undoInfo(closeChunk = True)
             
 def showUI(arg):
-    ssdsUiWindow = None
-    # global ssdsUiWindow
-    if ssdsUiWindow == None:
-        ssdsUiWindow = ssdsUI()
-    ssdsUiWindow.show()
+    MainWindow = None
+    # global MainWindow
+    if MainWindow == None:
+        MainWindow = TemplateUI()
+    MainWindow.show()
 
 def initializePlugin(plugin):
-    fnPlugin = OpenMaya.MFnPlugin(plugin, 'Template', "1.0")
+    fnPlugin = OpenMaya.MFnPlugin(plugin, 'TemplateUI', "1.0")
     try:
         createUI()
     except: raise
