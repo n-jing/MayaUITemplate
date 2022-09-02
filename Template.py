@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from maya import cmds
-from maya.api import OpenMaya as om
+import maya.api.OpenMaya as OpenMaya
 from maya import OpenMayaUI as omui
 import ssds_ui
 import maya.mel
@@ -52,13 +52,13 @@ def showUI(arg):
     ssdsUiWindow.show()
 
 def initializePlugin(plugin):
-    fnPlugin = om.MFnPlugin(plugin, vendor = 'SkinDecomp', version = 'v.' + RELEASE_DATE)
+    fnPlugin = OpenMaya.MFnPlugin(plugin, vendor = 'SkinDecompd', version = 'v.' + RELEASE_DATE)
     try:
         createUI()
     except: raise
  
 def uninitializePlugin(plugin):
-    fnPlugin = om.MFnPlugin(plugin)
+    fnPlugin = OpenMaya.MFnPlugin(plugin)
     try:
         deleteUI()
     except: raise
