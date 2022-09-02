@@ -33,7 +33,7 @@ class TemplateUI(QMainWindow):
         cmds.undoInfo(openChunk = True)
         try:
             print("***************process****************")
-            build(nnz, LaplacianStep, Iterations, LaplacianIterNum, clusterRing)
+            # build(nnz, LaplacianStep, Iterations, LaplacianIterNum, clusterRing)
         except Exception as e:
             raise e
         finally:
